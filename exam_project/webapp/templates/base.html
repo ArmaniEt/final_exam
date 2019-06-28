@@ -8,44 +8,49 @@
     <title>{% block title %}Exam Project{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Arimo:400,700" rel="stylesheet">
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    {% block styles %}{% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-0 border-bottom pb-0">
-    <div class="container">
-        <nav class="navbar navbar-light bg-light">
-            {#      logo goes here      #}
-        </nav>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-0 border-bottom pb-0">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item navbar-text text-dark">Привет, <span
-                                class="text-capitalize font-weight-light border-bottom"><a
-                                href="{% url 'webapp:user_detail' user.client.pk %}">{{ user.username }}</a></span> !
-                        </li>
-                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-dark font-weight-light">Выход</a>
-                        </li>
-                        {% block menu %}
-                        {% endblock %}
-                    </ul>
-                {% else %}
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link text-dark">Вход</a></li>
-                    </ul>
-                {% endif %}
+            <ul class='navbar-nav mr-auto'>
+                <li class="nav-item mr-auto">
+                    <a class="nav-link" href="#">Link 1</a>
+                </li>
+                <li class="nav-item mr-auto">
+                    <a class="nav-link" href="#">Link 2</a>
+                </li>
+            </ul>
         </div>
-    </div>
-</nav>
-<div class="container">
-    {% block content %}{% endblock %}
+
+        {#            <ul class="navbar-nav">#}
+        {#                {% if user.is_authenticated %}#}
+        {#                    </ul>#}
+        {#                    <ul class="navbar-nav ml-auto">#}
+        {#                        <li class="nav-item navbar-text text-dark">Привет, <span#}
+        {#                                class="text-capitalize font-weight-light border-bottom"><a#}
+        {#                                href="{% url 'webapp:user_detail' user.client.pk %}">{{ user.username }}</a></span> !#}
+        {#                        </li>#}
+        {#                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-dark font-weight-light">Выход</a>#}
+        {#                        </li>#}
+        {#                        {% block menu %}#}
+        {#                        {% endblock %}#}
+        {#                    </ul>#}
+        {#                {% else %}#}
+        {#                    <ul class="navbar-nav ml-auto">#}
+        {#                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link text-dark">Вход</a></li>#}
+        {#                    </ul>#}
+        {#                {% endif %}#}
+    </nav>
+
 </div>
+{% block content %}{% endblock %}
 
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
