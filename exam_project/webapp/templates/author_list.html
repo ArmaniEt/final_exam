@@ -2,14 +2,15 @@
 {% load staticfiles %}
 {% block content %}
     <div class="container">
-        <div class="card-group mt-2">
+        <div class="card-group">
             {% for author in author_list %}
-                <div class="card" style="max-width: 18rem;">
+                <div class="card m-2" style="max-width: 18rem;">
                     <img class="card-img-top" src="{{ author.photography.url }}"
-                         alt="author_photo">
+                         alt="author_photo" style="max-width: 18rem; max-height: 18rem">
                     <div class="card-body">
                         <h5 class="card-title">{{ author.full_name }}</h5>
                         <p class="card-text">{{ author.biography }}</p>
+                        <a href="{% url 'webapp:author_create' %}" class="badge badge-primary">Редактировать</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">{{ author.birth_date }} - {{ author.death_date }}</small>
@@ -17,5 +18,6 @@
                 </div>
             {% endfor %}
         </div>
+        <a href="{% url 'webapp:author_create' %}" class="btn btn-info" role="button">Добавить Автора</a>
     </div>
 {% endblock %}
