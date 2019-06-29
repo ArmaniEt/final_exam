@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class SoftDeleteManager(models.Manager):
@@ -22,8 +23,6 @@ class Author(models.Model):
     def __str__(self):
         return "%s" % self.full_name
 
-# Book model
-
 
 class Book(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название книги")
@@ -35,3 +34,12 @@ class Book(models.Model):
 
     def __str__(self):
         return "%s" % self.name
+
+
+class UsersBookShelf(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='book_user', verbose_name='Пользователь')
+    book = models.ManyToManyField(Book, on_delete=models.CASCADE,
+                                  related_name='book_on_shelf', verbose_name='Книга на полке')
+
+    def __str__(self):
+        return "%s" % self.user.first_name
