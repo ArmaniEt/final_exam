@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from webapp.models import Author, Book
+from webapp.models import Author, Book, UsersBookShelf
 from django.contrib.auth.decorators import login_required
 
 
@@ -89,3 +89,13 @@ class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 class AuthorDetailView(DetailView):
     model = Author
     template_name = 'author_detail.html'
+
+
+class UserListView(ListView):
+    model = UsersBookShelf
+    template_name = 'users_list.html'
+
+
+class UserDetailView(DetailView):
+    model = UsersBookShelf
+    template_name = 'user_detail.html'
