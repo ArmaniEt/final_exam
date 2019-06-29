@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -92,10 +93,10 @@ class AuthorDetailView(DetailView):
 
 
 class UserListView(ListView):
-    model = UsersBookShelf
+    model = User
     template_name = 'users_list.html'
 
 
 class UserDetailView(DetailView):
-    model = UsersBookShelf
+    model = User
     template_name = 'user_detail.html'
