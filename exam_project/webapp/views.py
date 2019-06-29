@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm
+from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
 from django.views.generic import ListView, CreateView, UpdateView
 from webapp.models import Author, Book
 from django.contrib.auth.decorators import login_required
@@ -59,6 +59,15 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
     form_class = BookCreateForm
     template_name = 'book_create.html'
+
+    def get_success_url(self):
+        return reverse('webapp:main_page')
+
+
+class BookUpdateView(LoginRequiredMixin, UpdateView):
+    model = Book
+    form_class = BookUpdateForm
+    template_name = 'book_update.html'
 
     def get_success_url(self):
         return reverse('webapp:main_page')
