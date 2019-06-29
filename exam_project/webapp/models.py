@@ -3,7 +3,7 @@ from django.db import models
 # Author model
 
 
-class Author:
+class Author(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя автора")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата рождения")
     death_date = models.DateField(null=True, blank=True, verbose_name="Дата смерти")
@@ -12,9 +12,3 @@ class Author:
 
 # Book model
 
-
-
-
-
-
-#
