@@ -2,13 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from webapp.forms import AuthorCreateForm, AuthorUpdateForm
+from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm
 from django.views.generic import ListView, CreateView, UpdateView
 from webapp.models import Author, Book
 from django.contrib.auth.decorators import login_required
 
 
-class BookListView(LoginRequiredMixin, ListView):
+class BookListView(ListView):
     model = Book
     template_name = 'main.html'
 
@@ -53,3 +53,12 @@ def book_download(request, pk):
     response['Content-Disposition'] = 'attachment; filename=%s' % file_name
 
     return response
+
+
+class BookCreateView(LoginRequiredMixin, CreateView):
+    model = Book
+    form_class = BookCreateForm
+    template_name = 'book_create.html'
+
+    def get_success_url(self):
+        return reverse('webapp:main_page')

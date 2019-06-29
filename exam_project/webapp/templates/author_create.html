@@ -5,7 +5,9 @@
         <form action="{% url 'webapp:author_create' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-                {{ field.errors }}
+                <p class="text-danger">
+                    {{ field.errors }}
+                </p>
                 <div class="row">
                     <div class="col-sm-2 mt-3">
                         {{ field.label_tag }}

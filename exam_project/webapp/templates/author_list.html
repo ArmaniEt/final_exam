@@ -5,11 +5,24 @@
         <div class="card-group">
             {% for author in author_list %}
                 <div class="card m-2" style="max-width: 18rem;">
-                    <img class="card-img-top" src="{{ author.photography.url }}"
+                 {% if author.photography %}
+                            <img class="card-img-top" src="{{ author.photography.url }}"
                          alt="author_photo" style="max-width: 18rem; max-height: 18rem">
+
+                        {% else %}
+                            <img src="{% static 'images/no-author-cover.jpg' %}" alt="">
+                        {% endif %}
+
                     <div class="card-body">
                         <h5 class="card-title">{{ author.full_name }}</h5>
                         <p class="card-text">{{ author.biography }}</p>
+                        <ul class="list-group">
+
+                            {% for book in author.books.all %}
+                                <li class="list-group-item m-2 text-center">{{ book.name }}</li>
+                            {% endfor %}
+                        </ul>
+
                         <a href="{% url 'webapp:author_update' author.pk %}"
                            class="badge badge-primary">Редактировать</a>
                         <a href="{% url 'webapp:author_delete' author.pk %}"
@@ -26,9 +39,9 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="mt-2">
+        <div class="m-4">
             <a href="{% url 'webapp:author_create' %}" class="btn btn-info d-block m-auto w-25" role="button">Добавить
-            Автора</a>
+                Автора</a>
         </div>
     </div>
 {% endblock %}

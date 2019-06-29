@@ -2,22 +2,41 @@
 {% load staticfiles %}
 {% block content %}
     <div class="container">
-        <div class="d-flex justify-content-around">
+        <div class="m-3">
+            <a href="{% url 'webapp:book_create' %}" class="btn btn-info d-block m-auto w-75" role="button">Добавить
+                книгу</a>
+        </div>
+        <div class="row justify-content-around">
             {% for book in book_list %}
-                <div class="card mb-3 mt-2" style="width: 25rem;">
-                    <img class="card-img-top" src="{{ book.cover.url }}" alt="Card image cap">
-                    <p class="text-center">{{ book.author.full_name }}</p>
-                    <div class="card-body">
-                        <h5 class="card-title text-center">{{ book.name }}</h5>
-                        <p class="card-text">{{ book.description }}</p>
-                        <a href="{% url 'webapp:book_download' book.pk %}">Загрузить книгу</a>
-                        <p class="card-text">
-                            <small class="text-muted">{{ book.published_date }}</small>
-                        </p>
+                <div class="col-lg-6 m-auto">
+                    <div class="card mb-3 mt-2" style="max-width: 30rem;">
+                        {% if book.cover %}
+                            <img class="card-img-top" src="{{ book.cover.url }}" alt="Card image cap">
+
+                        {% else %}
+                            <img src="{% static 'images/no-book-cover.png' %}" alt="">
+                        {% endif %}
+
+                        <p class="text-center">{{ book.author.full_name }}</p>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ book.name }}</h5>
+                            <p class="card-text">{{ book.description }}</p>
+
+                            <div class="m-2">
+                                <a href="{% url 'webapp:book_update' book.pk %}"
+                                   class="badge badge-primary">Редактировать</a>
+                                <a href="{% url 'webapp:book_delete' book.pk %}"
+                                   class="badge badge-danger">Удалить</a>
+                            </div>
+                            <a href="{% url 'webapp:book_download' book.pk %}">Загрузить книгу</a>
+                            <p class="card-text">
+                                <small class="text-muted">{{ book.published_date }}</small>
+                            </p>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </div>
 
+    </div>
 {% endblock %}

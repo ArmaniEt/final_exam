@@ -1,5 +1,5 @@
 from django import forms
-from webapp.models import Author
+from webapp.models import Author, Book
 
 
 class AuthorCreateForm(forms.ModelForm):
@@ -13,7 +13,7 @@ class AuthorCreateForm(forms.ModelForm):
 
     photography = forms.ImageField(
         widget=forms.FileInput(attrs={'type': "file", 'class': 'form-control-file',
-                                         'placeholder': 'Фотография'}))
+                                         'placeholder': 'Фотография'}), required=False)
 
     class Meta:
         model = Author
@@ -40,7 +40,7 @@ class AuthorUpdateForm(forms.ModelForm):
 
     photography = forms.ImageField(
         widget=forms.FileInput(attrs={'type': "file", 'class': 'form-control-file',
-                                      'placeholder': 'Фотография'}))
+                                      'placeholder': 'Фотография'}), required=False)
 
     class Meta:
         model = Author
@@ -55,4 +55,26 @@ class AuthorUpdateForm(forms.ModelForm):
                                                  'placeholder': 'Биография'}),
 
 
+        }
+
+
+class BookCreateForm(forms.ModelForm):
+    published_date = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                      'placeholder': 'Год издания'}))
+
+    author = forms.ModelChoiceField(queryset=Author.objects.active(),
+                                            widget=forms.Select
+                                            (attrs={'class': 'form-control form-control-sm shadow-none'}),
+                                            required=True)
+
+    class Meta:
+        model = Book
+        fields = ['name', 'author', 'published_date', 'file', 'cover', 'description']
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'form-control form-control-sm shadow-none',
+                                                 'placeholder': 'Описание книги'}),
+
+            'name': forms.TextInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                                 'placeholder': 'Название книги'}),
         }
