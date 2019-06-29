@@ -38,8 +38,7 @@ class Book(models.Model):
 
 class UsersBookShelf(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='book_user', verbose_name='Пользователь')
-    book = models.ManyToManyField(Book, on_delete=models.CASCADE,
-                                  related_name='book_on_shelf', verbose_name='Книга на полке')
+    book = models.ManyToManyField(Book, related_name='book_on_shelf', verbose_name='Книга на полке')
 
     def __str__(self):
         return "%s" % self.user.first_name
