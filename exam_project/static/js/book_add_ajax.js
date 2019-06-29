@@ -1,15 +1,37 @@
-function dataPost(object, event) {
-    event.preventDefault();
-    let url = form_elem.attr('action');
+function dataPost(id) {
+    let url = $(event.target).data('url');
     let csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
     $.ajax({
         url: url,
         data: {
-            book_object: object,
+            book_id: id,
             csrfmiddlewaretoken: csrftoken
+        },
+        success: function(response) {
+                alert(response.message);
+
         },
         type: 'POST',
     });
+
+}
+
+function dataDelete(id) {
+    let url = $(event.target).data('delete-url');
+    let csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+    $.ajax({
+        url: url,
+        data: {
+             book_id: id,
+            csrfmiddlewaretoken: csrftoken
+        },
+        success: function(response) {
+                alert(response.message);
+        },
+        type: 'POST',
+    });
+
 
 }

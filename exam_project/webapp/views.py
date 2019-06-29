@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from webapp.models import Author, Book, UsersBookShelf
+from webapp.models import Author, Book
 from django.contrib.auth.decorators import login_required
 
 
@@ -104,8 +104,15 @@ class UserDetailView(DetailView):
 
 def add_book_to_shelf(request):
     user = request.user
-    print(user.book_user.book.book_on_shelf.all)
-    book_on_shelf = user.book
-    book = request.POST.get('book_object', None)
-    book_on_shelf.add(book)
-    return JsonResponse({'book_object': book})
+    book_id = request.POST.get('book_id', None)
+    book = Book.objects.get(pk=book_id)
+    user.book_user.book.add(book)
+    return JsonResponse({'message': "Книга добавлена"})
+
+
+def delete_book_from_shelf(request):
+    user = request.user
+    book_id = request.POST.get('book_id', None)
+    book = Book.objects.get(pk=book_id)
+    user.book_user.book.remove(book)
+    return JsonResponse({'message': "Книга удалена"})

@@ -12,13 +12,15 @@
                     <p class="text-center">{{ user.email }}</p>
                     <h6 class="card-subtitle mb-2 text-muted">Книжная полка: </h6>
                     {% for book in user.book_user.book.all %}
-                        <form action="{% url 'webapp:add_book' %}" method="post">
+                        <form action="" method="post" onsubmit="return false;">
                             {% csrf_token %}
-                            <p class="card-text">{{ book.name }}:
-                                <button onclick="dataPost({{ book }}, event)"
-                                   class="card-link">Добавить книгу</button>
-                                <a href="#" class="card-link">Удалить книгу</a>
-                            </p>
+                            <p class="card-text">{{ book.name }}:</p>
+                                <button data-url="{% url 'webapp:add_book' %}"
+                                        onclick="dataPost({{ book.pk }});"
+                                   class="btn btn-primary" type="button">Добавить книгу</button>
+                                <button data-delete-url ="{% url 'webapp:delete_book' %}"
+                                        onclick="dataDelete({{ book.pk }});" class="btn btn-danger">Удалить книгу</button>
+
                         </form>
                     {% endfor %}
                     <div class="text-center">

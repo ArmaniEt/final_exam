@@ -29,6 +29,14 @@
                                    class="badge badge-primary">Редактировать</a>
                                 <a href="{% url 'webapp:book_delete' book.pk %}"
                                    class="badge badge-danger">Удалить</a>
+
+                                <form action="" method="post" onsubmit="return false;">
+                                    {% csrf_token %}
+                                    <button data-url="{% url 'webapp:add_book' %}"
+                                            onclick="dataPost({{ book.pk }});"
+                                            class="badge badge-success" type="button">Добавить книгу на полку
+                                    </button>
+                                </form>
                             </div>
                             <a href="{% url 'webapp:book_download' book.pk %}">Загрузить книгу</a>
                             <p class="card-text">
@@ -39,6 +47,8 @@
                 </div>
             {% endfor %}
         </div>
-
     </div>
+    {% block scripts %}
+        <script src="{% static 'js/book_add_ajax.js' %}"></script>
+    {% endblock %}
 {% endblock %}

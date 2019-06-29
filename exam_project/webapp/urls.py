@@ -2,7 +2,7 @@ from django.urls import path
 from webapp.views import BookListView, AuthorListView, \
     AuthorCreateView, AuthorUpdateView, soft_delete_author, \
     book_download, BookCreateView, BookUpdateView, BookDeleteView, \
-    AuthorDetailView, UserListView, UserDetailView, add_book_to_shelf
+    AuthorDetailView, UserListView, UserDetailView, add_book_to_shelf, delete_book_from_shelf
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,6 +26,7 @@ urlpatterns = [
     # user url's
     path('user_list', UserListView.as_view(), name='user_list'),
     path('user/<int:pk>', UserDetailView.as_view(), name='user_detail'),
-    path('add_book_to_shelf', add_book_to_shelf, name='add_book')
+    path('add_book_to_shelf', add_book_to_shelf, name='add_book'),
+    path('delete_book_from_shelf', delete_book_from_shelf, name='delete_book')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
