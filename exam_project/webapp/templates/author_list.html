@@ -10,14 +10,23 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ author.full_name }}</h5>
                         <p class="card-text">{{ author.biography }}</p>
-                        <a href="{% url 'webapp:author_update' author.pk %}" class="badge badge-primary">Редактировать</a>
+                        <a href="{% url 'webapp:author_update' author.pk %}"
+                           class="badge badge-primary">Редактировать</a>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">{{ author.birth_date }} - {{ author.death_date }}</small>
+                        <small class="text-muted">{{ author.birth_date }} - {% if not author.death_date %}
+                            <span>Живой</span>
+                        {% else %}
+                            <span>{{ author.death_date }}</span>
+                        {% endif %}
+                        </small>
                     </div>
                 </div>
             {% endfor %}
         </div>
-        <a href="{% url 'webapp:author_create' %}" class="btn btn-info" role="button">Добавить Автора</a>
+        <div class="mt-2">
+            <a href="{% url 'webapp:author_create' %}" class="btn btn-info d-block m-auto w-25" role="button">Добавить
+            Автора</a>
+        </div>
     </div>
 {% endblock %}

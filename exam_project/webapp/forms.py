@@ -3,6 +3,17 @@ from webapp.models import Author
 
 
 class AuthorCreateForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                      'placeholder': 'Дата рождения'}))
+
+    death_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                      'placeholder': 'Дата смерти'}))
+
+    photography = forms.ImageField(
+        widget=forms.FileInput(attrs={'type': "file", 'class': 'form-control-file',
+                                         'placeholder': 'Фотография'}))
 
     class Meta:
         model = Author
@@ -11,24 +22,25 @@ class AuthorCreateForm(forms.ModelForm):
             'full_name': forms.TextInput(attrs={'class': 'form-control form-control-sm shadow-none',
                                                 'placeholder': 'ФИО Автора'}),
 
-            # 'birth_date': forms.DateInput(
-            #     format=('%d-%m-%Y'),
-            #     attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                     'placeholder': 'Дата рождения'}),
-            #
-            # 'death_date': forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                      'placeholder': 'Дата смерти'}),
 
             'biography': forms.Textarea(attrs={'class': 'form-control form-control-sm shadow-none',
                                                  'placeholder': 'Биография'}),
-
-            # 'photography': forms.ImageField(attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                      'placeholder': 'Фотография'}),
 
         }
 
 
 class AuthorUpdateForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                        'placeholder': 'Дата рождения'}))
+
+    death_date = forms.DateField(
+        widget=forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
+                                      'placeholder': 'Дата смерти'}))
+
+    photography = forms.ImageField(
+        widget=forms.FileInput(attrs={'type': "file", 'class': 'form-control-file',
+                                      'placeholder': 'Фотография'}))
 
     class Meta:
         model = Author
@@ -37,18 +49,10 @@ class AuthorUpdateForm(forms.ModelForm):
             'full_name': forms.TextInput(attrs={'class': 'form-control form-control-sm shadow-none',
                                                 'placeholder': 'ФИО Автора'}),
 
-            # 'birth_date': forms.DateInput(
-            #     format=('%d-%m-%Y'),
-            #     attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                     'placeholder': 'Дата рождения'}),
-            #
-            # 'death_date': forms.DateInput(attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                      'placeholder': 'Дата смерти'}),
+
 
             'biography': forms.Textarea(attrs={'class': 'form-control form-control-sm shadow-none',
                                                  'placeholder': 'Биография'}),
 
-            # 'photography': forms.ImageField(attrs={'class': 'form-control form-control-sm shadow-none',
-            #                                      'placeholder': 'Фотография'}),
 
         }
