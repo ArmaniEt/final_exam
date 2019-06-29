@@ -32,3 +32,6 @@ class Book(models.Model):
     file = models.FileField(upload_to='texts/', null=True, blank=True)
     cover = models.ImageField(upload_to='covers/', blank=True, null=True)
     description = models.TextField(max_length=1000, blank=True, null=True)
+
+    def __str__(self):
+        return "%s" % self.name

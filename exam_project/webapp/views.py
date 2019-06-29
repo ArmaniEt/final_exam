@@ -1,22 +1,25 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm
-from django.views.generic import ListView, TemplateView, CreateView, UpdateView
-from webapp.models import Author
+from django.views.generic import ListView, CreateView, UpdateView
+from webapp.models import Author, Book
+from django.contrib.auth.decorators import login_required
 
 
-class MainPage(LoginRequiredMixin, TemplateView):
+class BookListView(LoginRequiredMixin, ListView):
+    model = Book
     template_name = 'main.html'
 
 
-class AuthorListView(ListView):
+class AuthorListView(LoginRequiredMixin, ListView):
     queryset = Author.objects.active()
     model = Author
     template_name = 'author_list.html'
 
 
-class AuthorCreateView(CreateView):
+class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = Author
     form_class = AuthorCreateForm
     template_name = 'author_create.html'
@@ -25,7 +28,7 @@ class AuthorCreateView(CreateView):
         return reverse('webapp:author_list')
 
 
-class AuthorUpdateView(UpdateView):
+class AuthorUpdateView(LoginRequiredMixin, UpdateView):
     model = Author
     form_class = AuthorUpdateForm
     template_name = 'author_update.html'
@@ -34,8 +37,19 @@ class AuthorUpdateView(UpdateView):
         return reverse('webapp:author_list')
 
 
+@login_required
 def soft_delete_author(request, pk):
     author = get_object_or_404(Author, pk=pk)
     author.is_deleted = True
     author.save()
     return redirect('webapp:author_list')
+
+
+def book_download(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    file = book.file
+    file_name = book.file.name
+    response = HttpResponse(file, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=%s' % file_name
+
+    return response
