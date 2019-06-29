@@ -11,6 +11,7 @@ class MainPage(LoginRequiredMixin, TemplateView):
 
 
 class AuthorListView(ListView):
+    queryset = Author.objects.active()
     model = Author
     template_name = 'author_list.html'
 
