@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
@@ -100,3 +100,12 @@ class UserListView(ListView):
 class UserDetailView(DetailView):
     model = User
     template_name = 'user_detail.html'
+
+
+def add_book_to_shelf(request):
+    user = request.user
+    print(user.book_user.book.book_on_shelf.all)
+    book_on_shelf = user.book
+    book = request.POST.get('book_object', None)
+    book_on_shelf.add(book)
+    return JsonResponse({'book_object': book})

@@ -12,8 +12,14 @@
                     <p class="text-center">{{ user.email }}</p>
                     <h6 class="card-subtitle mb-2 text-muted">Книжная полка: </h6>
                     {% for book in user.book_user.book.all %}
-                        <p class="card-text">{{ book.name }}:
-                            <a href="#" class="card-link">Добавить книгу</a> <a href="#" class="card-link">Удалить книгу</a></p>
+                        <form action="{% url 'webapp:add_book' %}" method="post">
+                            {% csrf_token %}
+                            <p class="card-text">{{ book.name }}:
+                                <button onclick="dataPost({{ book }}, event)"
+                                   class="card-link">Добавить книгу</button>
+                                <a href="#" class="card-link">Удалить книгу</a>
+                            </p>
+                        </form>
                     {% endfor %}
                     <div class="text-center">
 
@@ -22,4 +28,7 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/book_add_ajax.js' %}"></script>
 {% endblock %}
