@@ -12,6 +12,8 @@
                         <p class="card-text">{{ author.biography }}</p>
                         <a href="{% url 'webapp:author_update' author.pk %}"
                            class="badge badge-primary">Редактировать</a>
+                        <a href="{% url 'webapp:author_delete' author.pk %}"
+                           class="badge badge-danger">Удалить</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">{{ author.birth_date }} - {% if not author.death_date %}
