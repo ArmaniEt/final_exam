@@ -17,7 +17,9 @@
                             <img src="{% static 'images/no-book-cover.png' %}" alt="">
                         {% endif %}
 
-                        <p class="text-center">{{ book.author.full_name }}</p>
+                        <a href="{% url 'webapp:author_detail' book.author.pk %}"
+                           class="text-center">{{ book.author.full_name }}</a>
+
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ book.name }}</h5>
                             <p class="card-text">{{ book.description }}</p>

@@ -27,6 +27,8 @@
                            class="badge badge-primary">Редактировать</a>
                         <a href="{% url 'webapp:author_delete' author.pk %}"
                            class="badge badge-danger">Удалить</a>
+                         <a href="{% url 'webapp:author_detail' author.pk %}"
+                           class="badge badge-primary">Посмотреть автора</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">{{ author.birth_date }} - {% if not author.death_date %}

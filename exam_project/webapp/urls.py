@@ -1,6 +1,7 @@
 from django.urls import path
 from webapp.views import BookListView, AuthorListView, \
-    AuthorCreateView, AuthorUpdateView, soft_delete_author, book_download, BookCreateView, BookUpdateView, BookDeleteView
+    AuthorCreateView, AuthorUpdateView, soft_delete_author, \
+    book_download, BookCreateView, BookUpdateView, BookDeleteView, AuthorDetailView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path('author_create', AuthorCreateView.as_view(), name='author_create'),
     path('author/<int:pk>/update', AuthorUpdateView.as_view(), name='author_update'),
     path('author/<int:pk>/delete', soft_delete_author, name='author_delete'),
+    path('author/<int:pk>/view', AuthorDetailView.as_view(), name='author_detail'),
     # book url's
     path('book/<int:pk>/download', book_download, name='book_download'),
     path('book_create', BookCreateView.as_view(), name='book_create'),

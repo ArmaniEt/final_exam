@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from webapp.models import Author, Book
 from django.contrib.auth.decorators import login_required
 
@@ -19,19 +19,21 @@ class AuthorListView(ListView):
     template_name = 'author_list.html'
 
 
-class AuthorCreateView(LoginRequiredMixin, CreateView):
+class AuthorCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Author
     form_class = AuthorCreateForm
     template_name = 'author_create.html'
+    permission_required = 'webapp.add_author'
 
     def get_success_url(self):
         return reverse('webapp:author_list')
 
 
-class AuthorUpdateView(LoginRequiredMixin, UpdateView):
+class AuthorUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Author
     form_class = AuthorUpdateForm
     template_name = 'author_update.html'
+    permission_required = 'webapp.change_author'
 
     def get_success_url(self):
         return reverse('webapp:author_list')
@@ -55,19 +57,21 @@ def book_download(request, pk):
     return response
 
 
-class BookCreateView(LoginRequiredMixin, CreateView):
+class BookCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Book
     form_class = BookCreateForm
     template_name = 'book_create.html'
+    permission_required = 'webapp.add_book'
 
     def get_success_url(self):
         return reverse('webapp:main_page')
 
 
-class BookUpdateView(LoginRequiredMixin, UpdateView):
+class BookUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Book
     form_class = BookUpdateForm
     template_name = 'book_update.html'
+    permission_required = 'webapp.change_book'
 
     def get_success_url(self):
         return reverse('webapp:main_page')
@@ -76,12 +80,12 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
 class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Book
     template_name = 'book_delete.html'
-    permission_required = 'webapp.book_delete'
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     if not self.has_permission():
-    #         return redirect('webapp:author_list')
-    #     return super().dispatch(request, *args, **kwargs)
+    permission_required = 'webapp.delete_book'
 
     def get_success_url(self):
         return reverse('webapp:main_page')
+
+
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'author_detail.html'

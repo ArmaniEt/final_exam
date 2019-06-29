@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Страница автора{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+    <div class="text-center">
+        <h3>{{ author.full_name }}</h3>
+        <div>
+            <p>{{ author.birth_date }} - </p>
+            {% if not author.death_date %}
+                <p>Жив</p>
+            {% else %}
+                <p>{{ author.death_date }}</p>
+            {% endif %}
+        </div>
+        {% if author.photography %}
+            <img class="w-25" src="{{ author.photography.url }}" alt="">
+        {% else %}
+            <img src="{% static 'images/no-author-cover.jpg' %}" alt="">
+        {% endif %}
+        <div class="m-3">
+            <div class="card w-75 m-auto">
+                <div class="card-header">
+                    Биография
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ author.biography }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row justify-content-around">
+        {% for book in author.books.all %}
+            <div class="col-sm-3">
+                {% if book.cover %}
+                    <img class="w-100" src="{{ book.cover.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'images/no-book-cover.png' %}" alt="">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
