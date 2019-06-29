@@ -2,7 +2,20 @@
 {% load staticfiles %}
 {% block content %}
     <div class="container">
-
+        <div class="card-group mt-2">
+            {% for author in author_list %}
+                <div class="card" style="max-width: 18rem;">
+                    <img class="card-img-top" src="{{ author.photography.url }}"
+                         alt="author_photo">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ author.full_name }}</h5>
+                        <p class="card-text">{{ author.biography }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ author.birth_date }} - {{ author.death_date }}</small>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
 {% endblock %}

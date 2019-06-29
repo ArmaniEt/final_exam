@@ -10,3 +10,4 @@ class MainPage(LoginRequiredMixin, TemplateView):
 
 class AuthorListView(ListView):
     model = Author
+    template_name = 'author_list.html'
