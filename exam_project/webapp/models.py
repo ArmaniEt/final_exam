@@ -24,3 +24,11 @@ class Author(models.Model):
 
 # Book model
 
+
+class Book(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название книги")
+    author = models.ForeignKey(Author, on_delete=models.PROTECT, related_name='books', verbose_name='Автор')
+    published_date = models.CharField(max_length=255, verbose_name="Год издания")
+    file = models.FileField(upload_to='texts/', null=True, blank=True)
+    cover = models.ImageField(upload_to='covers/', blank=True, null=True)
+    description = models.TextField(max_length=1000, blank=True, null=True)
