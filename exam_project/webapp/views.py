@@ -1,9 +1,9 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from webapp.forms import AuthorCreateForm, AuthorUpdateForm, BookCreateForm, BookUpdateForm
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.models import Author, Book
 from django.contrib.auth.decorators import login_required
 
@@ -13,7 +13,7 @@ class BookListView(ListView):
     template_name = 'main.html'
 
 
-class AuthorListView(LoginRequiredMixin, ListView):
+class AuthorListView(ListView):
     queryset = Author.objects.active()
     model = Author
     template_name = 'author_list.html'
@@ -68,6 +68,20 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
     form_class = BookUpdateForm
     template_name = 'book_update.html'
+
+    def get_success_url(self):
+        return reverse('webapp:main_page')
+
+
+class BookDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Book
+    template_name = 'book_delete.html'
+    permission_required = 'webapp.book_delete'
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not self.has_permission():
+    #         return redirect('webapp:author_list')
+    #     return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('webapp:main_page')
